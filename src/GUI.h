@@ -9,12 +9,13 @@ class gui{
 public:
     //possibly make constructor to get window to bring drawing into a function later
     void display(){}//creates results text display
-    std::vector<sf::Text> dropdown(std::vector<std::string> options, sf::RectangleShape& dropdownRect, sf::Text& dropdownText, sf::Font &font){
+    std::vector<sf::Text> dropdown(std::vector<std::string> options, sf::RectangleShape& Rect,  sf::Font &font){
 
         // Dropdown menu items
         std::vector<sf::Text> dropdownItems;
         for (size_t i = 0; i < options.size(); ++i) {
-            sf::Text item = text(110, 95 + i * 30, 16, options[i], font);
+            auto dim = Rect.getGlobalBounds();
+            sf::Text item = text(dim.left+dim.width/2.0f, dim.top+dim.height/2.0f+dim.height + i * dim.height, 16, options[i], font);
             dropdownItems.push_back(item);
         }
         return dropdownItems;
@@ -28,12 +29,10 @@ public:
     sf::RectangleShape Rect(float x, float y, float height, float width){
         sf::RectangleShape Rect(sf::Vector2f(width, height));
         Rect.setFillColor(sf::Color{ 55, 55, 55, 255 });
-        //Rect.setOutlineColor(sf::Color::Black);
-        //Rect.setOutlineThickness(2.f);
         Rect.setPosition(x, y);
         return Rect;
     }
-
+    //creates text object
     sf::Text text(float x, float y, int size, std::string input, sf::Font &font){
         sf::Text Text;
         Text.setFont(font);

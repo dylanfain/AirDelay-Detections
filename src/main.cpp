@@ -20,7 +20,7 @@ int main() {
     //creates dropdown text, position is based on center not corner
     sf::Text dropdownText = test.text(110,65, 10,"Select an option", font);
     // Dropdown menu items
-    std::vector<sf::Text> dropdownItems = test.dropdown(options, dropdownRect, dropdownText, font);
+    std::vector<sf::Text> dropdownItems = test.dropdown(options, dropdownRect, font);
 
     // Dropdown menu state
     bool dropdownOpen = false;
@@ -39,6 +39,7 @@ int main() {
                     for (size_t i = 0; i < dropdownItems.size(); ++i) {
                         if (dropdownItems[i].getGlobalBounds().contains(sf::Vector2f(event.mouseButton.x, event.mouseButton.y))) {
                             std::cout << "Selected: " << options[i] << std::endl;
+                            //sets text
                             dropdownText.setString(dropdownItems[i].getString());
                             dropdownOpen = false;
                             break;
