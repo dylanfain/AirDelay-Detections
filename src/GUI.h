@@ -8,19 +8,13 @@ class gui{
     //dimension vars
 public:
     //possibly make constructor to get window to bring drawing into a function later
-    void display(){}
+    void display(){}//creates results text display
     std::vector<sf::Text> dropdown(std::vector<std::string> options, sf::RectangleShape& dropdownRect, sf::Text& dropdownText, sf::Font &font){
 
         // Dropdown menu items
         std::vector<sf::Text> dropdownItems;
         for (size_t i = 0; i < options.size(); ++i) {
-            sf::Text item;
-            item.setFont(font);
-            item.setString(options[i]);
-            item.setCharacterSize(16);
-            item.setFillColor(sf::Color::Black);
-            //make relative to dropdownrect position
-            item.setPosition(55, 85 + i * 30);
+            sf::Text item = text(110, 95 + i * 30, 16, options[i], font);
             dropdownItems.push_back(item);
         }
         return dropdownItems;
@@ -40,7 +34,7 @@ public:
         return Rect;
     }
 
-    sf::Text text(float x, float y, float size, std::string input, sf::Font &font){
+    sf::Text text(float x, float y, int size, std::string input, sf::Font &font){
         sf::Text Text;
         Text.setFont(font);
         Text.setString(input);
@@ -50,7 +44,5 @@ public:
         setText(Text, x, y);
         return Text;
     }
-
-
 
 };

@@ -2,12 +2,15 @@
 #include <iostream>
 #include "GUI.h"
 int main() {
+    //on press down darken button that mouse is over
+    // make dropdown sprite or image
     sf::RenderWindow window(sf::VideoMode(800, 600), "SFML Dropdown Menu");
     gui test;
     // Dropdown menu options
     std::vector<std::string> options = {"Option 1", "Option 2", "Option 3"};
     //dropdown menu rectangle
     sf::RectangleShape dropdownRect = test.Rect(50, 50, 30, 120);
+
     //Font can be moved into gui class if needed
     sf::Font font;
     if (!font.loadFromFile("files/font.ttf")) {
@@ -36,6 +39,7 @@ int main() {
                     for (size_t i = 0; i < dropdownItems.size(); ++i) {
                         if (dropdownItems[i].getGlobalBounds().contains(sf::Vector2f(event.mouseButton.x, event.mouseButton.y))) {
                             std::cout << "Selected: " << options[i] << std::endl;
+                            dropdownText.setString(dropdownItems[i].getString());
                             dropdownOpen = false;
                             break;
                         }
