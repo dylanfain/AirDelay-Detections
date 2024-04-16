@@ -10,7 +10,17 @@ struct FlightData {
     std::string airline;      // Airline
     int arrivalDelay;         // Arrival Delay
     bool weatherDelay;        // Weather Delay (0 or 1)
+    int month;                // Month
 };
+
+int extractMonth(const std::string& date) {
+    // Example date format: "3/1/2019"
+    std::stringstream ss(date);
+    std::string token;
+    std::getline(ss, token, '/');
+    return std::stoi(token); // Extract month
+}
+
 
 std::vector<FlightData> parseCSV(const std::string& filename) {
     std::vector<FlightData> data;
@@ -35,6 +45,7 @@ std::vector<FlightData> parseCSV(const std::string& filename) {
 
         // Date (2nd column)
         std::getline(ss, flight.date, ',');
+        flight.month = extractMonth(flight.date); // Extract and store month
 
         // Skip columns 3 to 5
         for (int i = 0; i < 3; ++i) {
