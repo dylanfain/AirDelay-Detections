@@ -6,14 +6,16 @@ int main() {
     gui test;
     // Dropdown menu options
     std::vector<std::string> options = {"Option 1", "Option 2", "Option 3"};
+    //dropdown menu rectangle
     sf::RectangleShape dropdownRect = test.Rect(50, 50, 30, 120);
-    // Dropdown menu text
+    //Font can be moved into gui class if needed
     sf::Font font;
     if (!font.loadFromFile("files/font.ttf")) {
         std::cerr << "Failed to load font" << std::endl;
         return 1;
     }
-    sf::Text dropdownText = test.text(55,55, 10,"Select an option", font);
+    //creates dropdown text, position is based on center not corner
+    sf::Text dropdownText = test.text(110,65, 10,"Select an option", font);
     // Dropdown menu items
     std::vector<sf::Text> dropdownItems = test.dropdown(options, dropdownRect, dropdownText, font);
 

@@ -7,8 +7,6 @@
 class gui{
     //dimension vars
 public:
-
-    void button(int x, int y, int height, int width, std::string name){}
     void display(){}
     std::vector<sf::Text> dropdown(std::vector<std::string> options, sf::RectangleShape& dropdownRect, sf::Text& dropdownText, sf::Font &font){
 
@@ -34,9 +32,9 @@ public:
     }
     sf::RectangleShape Rect(float x, float y, float height, float width){
         sf::RectangleShape Rect(sf::Vector2f(width, height));
-        Rect.setFillColor(sf::Color::White);
-        Rect.setOutlineColor(sf::Color::Black);
-        Rect.setOutlineThickness(2.f);
+        Rect.setFillColor(sf::Color{ 55, 55, 55, 255 });
+        //Rect.setOutlineColor(sf::Color::Black);
+        //Rect.setOutlineThickness(2.f);
         Rect.setPosition(x, y);
         return Rect;
     }
@@ -47,7 +45,8 @@ public:
         Text.setString(input);
         Text.setCharacterSize(size);
         Text.setFillColor(sf::Color::Black);
-        Text.setPosition(x, y);
+        //Text.setPosition(x, y);
+        setText(Text, x, y);
         return Text;
     }
 
