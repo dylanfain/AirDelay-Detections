@@ -1,12 +1,13 @@
 //
 // Created by samir on 4/16/2024.
 //
-#include <C:\SFML\include\SFML\Graphics.hpp>
+#include <SFML\Graphics.hpp>
 #include <iostream>
 
 class gui{
     //dimension vars
 public:
+    //possibly make constructor to get window to bring drawing into a function later
     void display(){}
     std::vector<sf::Text> dropdown(std::vector<std::string> options, sf::RectangleShape& dropdownRect, sf::Text& dropdownText, sf::Font &font){
 

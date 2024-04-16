@@ -1,4 +1,4 @@
-#include <C:\SFML\include\SFML\Graphics.hpp>
+#include <SFML\Graphics.hpp>
 #include <iostream>
 #include "GUI.h"
 int main() {
