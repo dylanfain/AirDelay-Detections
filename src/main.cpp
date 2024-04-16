@@ -1,7 +1,15 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
+#include "FlightData.h"
 
 int main() {
+    //Parsing file data Flight_delay.csv
+    vector<FlightData> flightData = parseCSV("files/Flight_delay.csv");
+
+
+
+
+    //GUI Start here
     sf::RenderWindow window(sf::VideoMode(800, 600), "SFML Dropdown Menu");
 
     // Dropdown menu options

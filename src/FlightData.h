@@ -1,0 +1,71 @@
+#include <iostream>
+#include <fstream>
+#include <sstream>
+#include <vector>
+#include <string>
+using namespace std;
+
+struct FlightData {
+    std::string date;         // Date
+    std::string airline;      // Airline
+    int arrivalDelay;         // Arrival Delay
+    bool weatherDelay;        // Weather Delay (0 or 1)
+};
+
+std::vector<FlightData> parseCSV(const std::string& filename) {
+    std::vector<FlightData> data;
+    std::ifstream file(filename);
+
+    if (!file.is_open()) {
+        std::cerr << "Failed to open file: " << filename << std::endl;
+        return data;
+    }
+
+    std::string line;
+    // Skip header line
+    std::getline(file, line);
+
+    while (std::getline(file, line)) {
+        std::stringstream ss(line);
+        std::string cell;
+        FlightData flight;
+
+        // Skip first column (DayOfWeek)
+        std::getline(ss, cell, ',');
+
+        // Date (2nd column)
+        std::getline(ss, flight.date, ',');
+
+        // Skip columns 3 to 5
+        for (int i = 0; i < 3; ++i) {
+            std::getline(ss, cell, ',');
+        }
+
+        // Airline (6th column)
+        std::getline(ss, flight.airline, ',');
+
+        // Skip columns 7 to 12
+        for (int i = 0; i < 6; ++i) {
+            std::getline(ss, cell, ',');
+        }
+
+        // Arrival Delay (13th column)
+        std::getline(ss, cell, ',');
+        flight.arrivalDelay = std::stoi(cell);
+
+        // Skip columns 14 to 24
+        for (int i = 0; i < 11; ++i) {
+            std::getline(ss, cell, ',');
+        }
+
+        // Weather Delay (25th column)
+        std::getline(ss, cell, ',');
+        flight.weatherDelay = (std::stoi(cell) == 1); // Convert to boolean
+
+        data.push_back(flight);
+    }
+
+    file.close();
+    return data;
+}
+

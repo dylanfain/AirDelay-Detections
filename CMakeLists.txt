@@ -12,3 +12,4 @@ find_package(SFML COMPONENTS system window graphics audio network REQUIRED)
 
 include_directories(c:/SFML/include/SFML)
 target_link_libraries(Project_3_AirDelay_Detections sfml-system sfml-window sfml-graphics sfml-audio)
+
