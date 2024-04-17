@@ -1,11 +1,63 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
+#include <chrono>
 #include "FlightData.h"
+#include "sort.h"
+
+std::vector<FlightData> filterByWeatherDelay(const std::vector<FlightData>& flightData, bool hasWeatherDelay) {
+    std::vector<FlightData> filteredData;
+    for (const auto& flight : flightData) {
+        if (flight.weatherDelay == hasWeatherDelay) {
+            filteredData.push_back(flight);
+        }
+    }
+    return filteredData;
+}
+
+std::vector<FlightData> filterByMonth(const std::vector<FlightData>& flightData, int targetMonth) {
+    std::vector<FlightData> filteredData;
+    for (const auto& flight : flightData) {
+        if (flight.month == targetMonth) {
+            filteredData.push_back(flight);
+        }
+    }
+    return filteredData;
+}
+
+std::vector<FlightData> filterByAirline(const std::vector<FlightData>& flightData, const std::string& targetAirline) {
+    std::vector<FlightData> filteredData;
+    for (const auto& flight : flightData) {
+        if (flight.airline == targetAirline) {
+            filteredData.push_back(flight);
+        }
+    }
+    return filteredData;
+}
+
 
 int main() {
     //Parsing file data Flight_delay.csv
     vector<FlightData> flightData = parseCSV("files/Flight_delay.csv");
-
+//    //example of all functions in use for final results
+//    //example filters added to flightdata
+//    flightData = filterByAirline(flightData, "American Airlines Inc.");
+//    flightData = filterByWeatherDelay(flightData, true);
+//    //timer start
+//    auto start = std::chrono::high_resolution_clock::now();
+//    //send the flightdata through heap sort
+//    heapSort(flightData);
+//    //end timer and calculate time to execute
+//    auto end = std::chrono::high_resolution_clock::now();
+//    auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
+//    //display all flights in order of flight delay
+//    for (const auto& flight : flightData) {
+//        std::cout << "Arrival Delay: " << flight.arrivalDelay << ", ";
+//        std::cout << "Date: " << flight.month << ", ";
+//        std::cout << "Airline: " << flight.airline << ", ";
+//        std::cout << "Weather Delay: " << flight.weatherDelay << std::endl;
+//    }
+//    //display execution time
+//    std::cout << "Heap sort execution time: " << duration.count() << " milliseconds" << std::endl;
 
 
 

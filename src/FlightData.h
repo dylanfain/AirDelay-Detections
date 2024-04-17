@@ -47,16 +47,16 @@ std::vector<FlightData> parseCSV(const std::string& filename) {
         std::getline(ss, flight.date, ',');
         flight.month = extractMonth(flight.date); // Extract and store month
 
-        // Skip columns 3 to 5
-        for (int i = 0; i < 3; ++i) {
+        // Skip columns 3 to 6
+        for (int i = 0; i < 4; ++i) {
             std::getline(ss, cell, ',');
         }
 
-        // Airline (6th column)
+        // Airline (7th column)
         std::getline(ss, flight.airline, ',');
 
-        // Skip columns 7 to 12
-        for (int i = 0; i < 6; ++i) {
+        // Skip columns 8 to 12
+        for (int i = 0; i < 5; ++i) {
             std::getline(ss, cell, ',');
         }
 
