@@ -1,8 +1,10 @@
 #include <SFML/Graphics.hpp>
 #include <iostream>
+#include <vector>
 #include "GUI.h"
 
 bool dropdownContains(const sf::Text& item, const sf::Vector2f& pos);
+void handleDropdownSelection(bool& dropdownOpen, const std::vector<sf::Text>& dropdownItems, const std::vector<std::string>& options, const sf::Vector2f& mousePosition, sf::Text& dropdownText);
 
 int main() {
     sf::RenderWindow window(sf::VideoMode(800, 600), "SFML Dropdown Menu");
@@ -16,60 +18,61 @@ int main() {
     // Titles and Labels
     sf::Text title("AirDelay Detections", font, 24);
     title.setFillColor(sf::Color::Black);
-
-    // Center the title at the top of the window
     float titleWidth = title.getLocalBounds().width;
     title.setPosition(sf::Vector2f((800 - titleWidth) / 2, 50));
 
-    // Calculate horizontal positions for labels and dropdowns
     float centerX = 800 / 2.0f;
     float labelY = 90;
     float dropdownY = 105;
 
     sf::Text weatherLabel("Weather Delay", font, 10);
     weatherLabel.setFillColor(sf::Color::Black);
-    float weatherLabelWidth = weatherLabel.getLocalBounds().width;
-    weatherLabel.setPosition(centerX - 150 - weatherLabelWidth, labelY);
+    weatherLabel.setPosition(centerX - 275 - weatherLabel.getLocalBounds().width, labelY);
 
     sf::Text monthLabel("Month", font, 10);
     monthLabel.setFillColor(sf::Color::Black);
-    float monthLabelWidth = monthLabel.getLocalBounds().width;
-    monthLabel.setPosition(centerX - monthLabelWidth / 2, labelY);
+    monthLabel.setPosition(centerX - monthLabel.getLocalBounds().width / 2 - 140, labelY);
 
     sf::Text airlineLabel("Airline", font, 10);
     airlineLabel.setFillColor(sf::Color::Black);
-    float airlineLabelWidth = airlineLabel.getLocalBounds().width;
-    airlineLabel.setPosition(centerX + 150, labelY);
+    airlineLabel.setPosition(centerX + 90 - airlineLabel.getLocalBounds().width, labelY);
 
-    // Dropdown options
     std::vector<std::string> weatherOptions = {"Sunny", "Rainy", "Snowy", "Cloudy"};
     std::vector<std::string> monthOptions = {"January", "February", "March", "April"};
     std::vector<std::string> airlineOptions = {"Airline A", "Airline B", "Airline C", "Airline D"};
 
-    // Dropdown rectangles and texts
-    float dropdownWidth = 120; // Adjust as needed based on dropdown content
-    sf::RectangleShape weatherRect = test.Rect(centerX - 200 - dropdownWidth / 2, dropdownY, 30, 120);
-    sf::RectangleShape monthRect = test.Rect(centerX - dropdownWidth / 2, dropdownY, 30, 120);
-    sf::RectangleShape airlineRect = test.Rect(centerX + 200 - dropdownWidth / 2, dropdownY, 30, 120);
+    float dropdownWidth = 120;
+    sf::RectangleShape weatherRect = test.Rect(centerX - 300 - dropdownWidth / 2, dropdownY, 30, 120);
+    sf::RectangleShape monthRect = test.Rect(centerX - dropdownWidth / 2 - 100, dropdownY, 30, 120);
+    sf::RectangleShape airlineRect = test.Rect(centerX + 100 - dropdownWidth / 2, dropdownY, 30, 120);
 
-    sf::Text weatherDropdownText = test.text(centerX - 200 - dropdownWidth / 2 + 30, dropdownY + 15, 10, "None", font);
+    sf::Text weatherDropdownText = test.text(centerX - 200 - dropdownWidth / 2 - 75, dropdownY + 15, 10, "None", font);
     weatherDropdownText.setFillColor(sf::Color::White);
-
-    sf::Text monthDropdownText = test.text(centerX - dropdownWidth / 2 + 30, dropdownY + 15, 10, "None", font);
+    sf::Text monthDropdownText = test.text(centerX - dropdownWidth / 2 - 75, dropdownY + 15, 10, "None", font);
     monthDropdownText.setFillColor(sf::Color::White);
-
-    sf::Text airlineDropdownText = test.text(centerX + 200 - dropdownWidth / 2 + 30, dropdownY + 15, 10, "None", font);
+    sf::Text airlineDropdownText = test.text(centerX + 90 - dropdownWidth / 2 + 30, dropdownY + 15, 10, "None", font);
     airlineDropdownText.setFillColor(sf::Color::White);
 
-    // Dropdown menu items
     std::vector<sf::Text> weatherDropdownItems = test.dropdown(weatherOptions, weatherRect, font);
     std::vector<sf::Text> monthDropdownItems = test.dropdown(monthOptions, monthRect, font);
     std::vector<sf::Text> airlineDropdownItems = test.dropdown(airlineOptions, airlineRect, font);
 
-    // Dropdown menu state
     bool weatherDropdownOpen = false;
     bool monthDropdownOpen = false;
     bool airlineDropdownOpen = false;
+
+    // Position filter button to the right of the airline dropdown
+    float filterButtonX = centerX + 200 + 50;
+    float filterButtonY = dropdownY; // Same Y position as dropdowns
+
+    sf::RectangleShape filterButton(sf::Vector2f(100, 30));
+    filterButton.setFillColor(sf::Color::Red);
+    filterButton.setPosition(filterButtonX, filterButtonY);
+
+    sf::Text filterButtonText("Apply Filter", font, 14);
+    filterButtonText.setFillColor(sf::Color::White);
+    // Center the text within the button
+    filterButtonText.setPosition(filterButtonX + (filterButton.getSize().x - filterButtonText.getLocalBounds().width) / 2, filterButtonY + (filterButton.getSize().y - filterButtonText.getLocalBounds().height) / 2);
 
     while (window.isOpen()) {
         sf::Event event;
@@ -81,49 +84,51 @@ int main() {
             if (event.type == sf::Event::MouseButtonReleased) {
                 sf::Vector2f mousePosition(event.mouseButton.x, event.mouseButton.y);
 
-                // Toggle dropdowns
+                // Toggle dropdowns and manage dropdown selection
                 if (weatherRect.getGlobalBounds().contains(mousePosition)) {
                     weatherDropdownOpen = !weatherDropdownOpen;
+                    monthDropdownOpen = false;
+                    airlineDropdownOpen = false;
                 } else if (monthRect.getGlobalBounds().contains(mousePosition)) {
                     monthDropdownOpen = !monthDropdownOpen;
+                    weatherDropdownOpen = false;
+                    airlineDropdownOpen = false;
                 } else if (airlineRect.getGlobalBounds().contains(mousePosition)) {
                     airlineDropdownOpen = !airlineDropdownOpen;
+                    weatherDropdownOpen = false;
+                    monthDropdownOpen = false;
                 }
 
-                // Handle dropdown item selection
-                for (size_t i = 0; i < weatherDropdownItems.size(); ++i) {
-                    if (dropdownContains(weatherDropdownItems[i], mousePosition)) {
-                        weatherDropdownText.setString(weatherOptions[i]);
-                        weatherDropdownOpen = false;
-                        std::cout << "Selected Weather: " << weatherOptions[i] << std::endl; // Output selected weather
-                        break;
-                    }
+                // Select dropdown items
+                handleDropdownSelection(weatherDropdownOpen, weatherDropdownItems, weatherOptions, mousePosition, weatherDropdownText);
+                handleDropdownSelection(monthDropdownOpen, monthDropdownItems, monthOptions, mousePosition, monthDropdownText);
+                handleDropdownSelection(airlineDropdownOpen, airlineDropdownItems, airlineOptions, mousePosition, airlineDropdownText);
+
+                // Output selected options when dropdown items are clicked
+                if (!weatherDropdownOpen && !monthDropdownOpen && !airlineDropdownOpen) {
+                    std::cout << "Selected Weather: " << weatherDropdownText.getString().toAnsiString() << std::endl;
+                    std::cout << "Selected Month: " << monthDropdownText.getString().toAnsiString() << std::endl;
+                    std::cout << "Selected Airline: " << airlineDropdownText.getString().toAnsiString() << std::endl;
                 }
-                for (size_t i = 0; i < monthDropdownItems.size(); ++i) {
-                    if (dropdownContains(monthDropdownItems[i], mousePosition)) {
-                        monthDropdownText.setString(monthOptions[i]);
-                        monthDropdownOpen = false;
-                        std::cout << "Selected Month: " << monthOptions[i] << std::endl; // Output selected month
-                        break;
-                    }
-                }
-                for (size_t i = 0; i < airlineDropdownItems.size(); ++i) {
-                    if (dropdownContains(airlineDropdownItems[i], mousePosition)) {
-                        airlineDropdownText.setString(airlineOptions[i]);
-                        airlineDropdownOpen = false;
-                        std::cout << "Selected Airline: " << airlineOptions[i] << std::endl; // Output selected airline
-                        break;
-                    }
+
+                // Filter button click action
+                if (filterButton.getGlobalBounds().contains(mousePosition) &&
+                    !weatherDropdownOpen && !monthDropdownOpen && !airlineDropdownOpen) {
+                    std::cout << "Filter Button Clicked!" << std::endl;
+                    std::cout << "Applying Filter with: " << std::endl;
+                    std::cout << "Weather: " << weatherDropdownText.getString().toAnsiString() << std::endl;
+                    std::cout << "Month: " << monthDropdownText.getString().toAnsiString() << std::endl;
+                    std::cout << "Airline: " << airlineDropdownText.getString().toAnsiString() << std::endl;
                 }
             }
         }
 
-        // Draw everything
         window.clear(sf::Color::White);
         window.draw(title);
         window.draw(weatherLabel);
         window.draw(monthLabel);
         window.draw(airlineLabel);
+
         window.draw(weatherRect);
         window.draw(weatherDropdownText);
         window.draw(monthRect);
@@ -131,7 +136,6 @@ int main() {
         window.draw(airlineRect);
         window.draw(airlineDropdownText);
 
-        // Draw dropdown items based on state
         if (weatherDropdownOpen) {
             for (const auto& item : weatherDropdownItems) {
                 window.draw(item);
@@ -148,6 +152,9 @@ int main() {
             }
         }
 
+        window.draw(filterButton);
+        window.draw(filterButtonText);
+
         window.display();
     }
 
@@ -156,4 +163,16 @@ int main() {
 
 bool dropdownContains(const sf::Text& item, const sf::Vector2f& pos) {
     return item.getGlobalBounds().contains(pos);
+}
+
+void handleDropdownSelection(bool& dropdownOpen, const std::vector<sf::Text>& dropdownItems, const std::vector<std::string>& options, const sf::Vector2f& mousePosition, sf::Text& dropdownText) {
+    if (!dropdownOpen) return;
+
+    for (size_t i = 0; i < dropdownItems.size(); i++) {
+        if (dropdownItems[i].getGlobalBounds().contains(mousePosition)) {
+            dropdownText.setString(options[i]);
+            dropdownOpen = false;
+            break;
+        }
+    }
 }
