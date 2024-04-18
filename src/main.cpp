@@ -1,44 +1,26 @@
-#include <SFML/Graphics.hpp>
+#include <SFML\Graphics.hpp>
 #include <iostream>
-
+#include "GUI.h"
 int main() {
+    //on press down darken button that mouse is over
+    // make dropdown sprite or image
     sf::RenderWindow window(sf::VideoMode(800, 600), "SFML Dropdown Menu");
-
+    gui test;
     // Dropdown menu options
     std::vector<std::string> options = {"Option 1", "Option 2", "Option 3"};
+    //dropdown menu rectangle
+    sf::RectangleShape dropdownRect = test.Rect(50, 50, 30, 120);
 
-    // Dropdown menu rectangle
-    sf::RectangleShape dropdownRect(sf::Vector2f(120, 30));
-    dropdownRect.setFillColor(sf::Color::White);
-    dropdownRect.setOutlineColor(sf::Color::Black);
-    dropdownRect.setOutlineThickness(2.f);
-    dropdownRect.setPosition(50, 50);
-
-    // Dropdown menu text
+    //Font can be moved into gui class if needed
     sf::Font font;
     if (!font.loadFromFile("files/font.ttf")) {
         std::cerr << "Failed to load font" << std::endl;
         return 1;
     }
-
-    sf::Text dropdownText;
-    dropdownText.setFont(font);
-    dropdownText.setString("Select an option");
-    dropdownText.setCharacterSize(10);
-    dropdownText.setFillColor(sf::Color::Black);
-    dropdownText.setPosition(55, 55);
-
+    //creates dropdown text, position is based on center not corner
+    sf::Text dropdownText = test.text(110,65, 10,"Select an option", font);
     // Dropdown menu items
-    std::vector<sf::Text> dropdownItems;
-    for (size_t i = 0; i < options.size(); ++i) {
-        sf::Text item;
-        item.setFont(font);
-        item.setString(options[i]);
-        item.setCharacterSize(16);
-        item.setFillColor(sf::Color::Black);
-        item.setPosition(55, 85 + i * 30);
-        dropdownItems.push_back(item);
-    }
+    std::vector<sf::Text> dropdownItems = test.dropdown(options, dropdownRect, font);
 
     // Dropdown menu state
     bool dropdownOpen = false;
@@ -57,6 +39,8 @@ int main() {
                     for (size_t i = 0; i < dropdownItems.size(); ++i) {
                         if (dropdownItems[i].getGlobalBounds().contains(sf::Vector2f(event.mouseButton.x, event.mouseButton.y))) {
                             std::cout << "Selected: " << options[i] << std::endl;
+                            //sets text
+                            dropdownText.setString(dropdownItems[i].getString());
                             dropdownOpen = false;
                             break;
                         }
