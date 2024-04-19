@@ -17,7 +17,8 @@ int extractMonth(const std::string& date) {
     // Example date format: "3/1/2019"
     std::stringstream ss(date);
     std::string token;
-    std::getline(ss, token, '/');
+    std::getline(ss, token, '-');
+    std::getline(ss, token, '-');
     return std::stoi(token); // Extract month
 }
 

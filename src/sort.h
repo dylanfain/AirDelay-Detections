@@ -33,3 +33,55 @@ void heapSort(std::vector<FlightData>& flightData) {
         heapify(flightData, i, 0);
     }
 }
+
+// Helper function to merge two sorted subarrays
+void merge(std::vector<FlightData>& flightData, int left, int middle, int right) {
+    int n1 = middle - left + 1;
+    int n2 = right - middle;
+
+    std::vector<FlightData> L(n1), R(n2);
+
+    // Copy data to temp arrays L[] and R[]
+    for (int i = 0; i < n1; ++i) {
+        L[i] = flightData[left + i];
+    }
+    for (int j = 0; j < n2; ++j) {
+        R[j] = flightData[middle + 1 + j];
+    }
+
+    // Merge the temp arrays back into flightData[left..right]
+    int i = 0, j = 0, k = left;
+    while (i < n1 && j < n2) {
+        if (L[i].arrivalDelay <= R[j].arrivalDelay) {
+            flightData[k] = L[i++];
+        } else {
+            flightData[k] = R[j++];
+        }
+        ++k;
+    }
+
+    // Copy the remaining elements of L[], if there are any
+    while (i < n1) {
+        flightData[k++] = L[i++];
+    }
+
+    // Copy the remaining elements of R[], if there are any
+    while (j < n2) {
+        flightData[k++] = R[j++];
+    }
+}
+
+// Merge sort function
+void mergeSort(std::vector<FlightData>& flightData, int left, int right) {
+    if (left < right) {
+        // Find the middle point
+        int middle = left + (right - left) / 2;
+
+        // Sort first and second halves
+        mergeSort(flightData, left, middle);
+        mergeSort(flightData, middle + 1, right);
+
+        // Merge the sorted halves
+        merge(flightData, left, middle, right);
+    }
+}
