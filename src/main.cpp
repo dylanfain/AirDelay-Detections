@@ -186,7 +186,12 @@ int main() {
     sf::Text filterButtonText("Apply Filter", font, 14);
     filterButtonText.setFillColor(sf::Color::White);
     filterButtonText.setPosition(filterButtonX + (filterButton.getSize().x - filterButtonText.getLocalBounds().width) / 2, filterButtonY + (filterButton.getSize().y - filterButtonText.getLocalBounds().height) / 2);
-
+    
+    //main result Rectangle showing what will display 
+    // the results vector should be done after filters and sorts take place
+    sf::RectangleShape MainResults = test.Rect(100, 200, 300, 600);
+    std::vector<sf::Text> Results = test.displayResults(flightData, font);
+    
     while (window.isOpen()) {
         sf::Event event;
         while (window.pollEvent(event)) {
@@ -263,6 +268,13 @@ int main() {
         window.draw(sortRect);
         window.draw(sortDropdownText);
 
+        //Result Window
+        window.draw(MainResults);
+        //will need an if statement to make sure that this only runs after apply filter is clicked
+        for (const auto& item : Results) {
+            window.draw(item);
+        } 
+        
         if (weatherDropdownOpen) {
             for (const auto& item : weatherDropdownItems) {
                 window.draw(item);
