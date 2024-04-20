@@ -1,4 +1,5 @@
 #include <iostream>
+#include <SFML\Graphics.hpp>
 
 class gui{
     //dimension vars
@@ -11,7 +12,7 @@ public:
         std::vector<sf::Text> dropdownItems;
         for (size_t i = 0; i < options.size(); ++i) {
             auto dim = Rect.getGlobalBounds();
-            sf::Text item = text(dim.left+dim.width/2.0f, dim.top+dim.height/2.0f+dim.height + i * dim.height, 16, options[i], font);
+            sf::Text item = text(dim.left+dim.width/2.0f, dim.top+dim.height/2.0f+dim.height + i * dim.height, 12, options[i], font);
             dropdownItems.push_back(item);
         }
         return dropdownItems;
@@ -25,6 +26,7 @@ public:
     sf::RectangleShape Rect(float x, float y, float height, float width){
         sf::RectangleShape Rect(sf::Vector2f(width, height));
         Rect.setFillColor(sf::Color{ 55, 55, 55, 255 });
+        //Rect.setOutlineColor(sf::Color::Black);
         Rect.setPosition(x, y);
         return Rect;
     }
