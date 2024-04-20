@@ -86,6 +86,27 @@ int main() {
 //    // Output execution time
     std::cout << "Merge sort execution time: " << duration2.count() << " milliseconds" << std::endl;*/
 
+//  start timing
+//    auto start3 = std::chrono::high_resolution_clock::now();
+//    auto OriginalData = flightData;
+//    //sort by quick sort
+//    quickSort(flightData, 0, flightData.size() - 1);
+//
+//    //End timing
+//    auto end3 = std::chrono::high_resolution_clock::now();
+//
+//    //Calculate duration
+//    auto duration3 = std::chrono::duration_cast<std::chrono::milliseconds>(end3 - start3);
+//
+//    for (const auto& flight : flightData) {
+//        std::cout << "Arrival Delay: " << flight.arrivalDelay << ", ";
+//        std::cout << "Date: " << flight.date << ", ";
+//        cout << "Month: " << flight.month << ", ";
+//        std::cout << "Airline: " << flight.airline << ", ";
+//        std::cout << "Weather Delay: " << flight.weatherDelay << std::endl;
+//    }
+//    //execution time
+//    std::cout << "Quick sort execution time: " << duration3.count() << " milliseconds" << std::endl;
 
 
     //GUI Start here
