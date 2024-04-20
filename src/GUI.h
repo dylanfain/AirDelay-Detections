@@ -5,7 +5,17 @@ class gui{
     //dimension vars
 public:
     //possibly make constructor to get window to bring drawing into a function later
-    void display(){}//creates results text display
+    std::vector<sf::Text> displayResults(std::vector<FlightData>& flightData, sf::Font &font){
+        std::vector<sf::Text> Results;
+        for (int i = 0; i < 10; ++i) {
+            std::string current = to_string(i+1)+".  "+flightData[i].airline+" " +flightData[i].date;
+            sf::Text item = text(300,  250 + i *25, 15,current, font);
+            item.setFillColor(sf::Color::White);
+            Results.push_back(item);
+        }
+        return Results;
+    }
+
     std::vector<sf::Text> dropdown(std::vector<std::string> options, sf::RectangleShape& Rect,  sf::Font &font){
 
         // Dropdown menu items
