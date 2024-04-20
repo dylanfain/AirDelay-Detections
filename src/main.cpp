@@ -192,7 +192,7 @@ int main() {
     
     //main result Rectangle showing what will display 
     // the results vector should be done after filters and sorts take place
-    sf::RectangleShape MainResults = test.Rect(100, 200, 300, 600);
+    sf::RectangleShape MainResults = test.Rect(100, 200, 330, 600);
     std::vector<sf::Text> Results = test.displayResults(flightData, font);
     sf::Text ResultTitle = test.text(400, 220, 20, "Results", font);
     ResultTitle.setFillColor(sf::Color::White);
@@ -294,6 +294,7 @@ int main() {
                     }
 
                     //Determine sort method
+                    string timeDisp;
                     if(sortDropdownText.getString().toAnsiString() == "Heap"){
                         //timer start
                         auto start = std::chrono::high_resolution_clock::now();
@@ -302,6 +303,7 @@ int main() {
                         //end timer and calculate time to execute
                         auto end = std::chrono::high_resolution_clock::now();
                         auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
+                        timeDisp = "Heap sort execution time: " + to_string(duration.count()) + " milliseconds";
                         std::cout << "Heap sort execution time: " << duration.count() << " milliseconds" << std::endl;
                     }
                     else if(sortDropdownText.getString().toAnsiString() == "Merge"){
@@ -313,8 +315,13 @@ int main() {
                         auto end = std::chrono::high_resolution_clock::now();
                         // Calculate duration
                         auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
+                        timeDisp = "Merge sort execution time: " + to_string(duration.count()) + " milliseconds";
                         std::cout << "Merge sort execution time: " << duration.count() << " milliseconds" << std::endl;
                     }
+                    Results = test.displayResults(flightData, font);
+                    sf::Text item = test.text(400,  500, 12,timeDisp, font);
+                    item.setFillColor(sf::Color::White);
+                    Results.push_back(item);
                 }
             }
         }
