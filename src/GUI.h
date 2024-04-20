@@ -1,4 +1,5 @@
 #include <iostream>
+#include <SFML\Graphics.hpp>
 
 class gui{
     //dimension vars
@@ -6,11 +7,17 @@ public:
     //possibly make constructor to get window to bring drawing into a function later
     std::vector<sf::Text> displayResults(std::vector<FlightData>& flightData, sf::Font &font){
         std::vector<sf::Text> Results;
-        for (int i = 0; i < 10; ++i) {
-            std::string current = to_string(i+1)+".  "+flightData[i].airline+" " +flightData[i].date;
-            sf::Text item = text(300,  250 + i *25, 15,current, font);
+        int index = 1;
+        for (int i = flightData.size()-1; i > flightData.size()-11; i--) {
+            string weatherval = "False";
+            if(to_string(flightData[i].weatherDelay) == "1")
+                weatherval = "True";
+            std::string current = to_string(index)+".  Delay: "+to_string(flightData[i].arrivalDelay)+" mins, "+flightData[i].airline+" " +flightData[i].date + ", Weather Delay: " +
+                    weatherval;
+            sf::Text item = text(400,  225 + index *25, 12,current, font);
             item.setFillColor(sf::Color::White);
             Results.push_back(item);
+            index++;
         }
         return Results;
     }
@@ -21,7 +28,7 @@ public:
         std::vector<sf::Text> dropdownItems;
         for (size_t i = 0; i < options.size(); ++i) {
             auto dim = Rect.getGlobalBounds();
-            sf::Text item = text(dim.left+dim.width/2.0f, dim.top+dim.height/2.0f+dim.height + i * dim.height, 16, options[i], font);
+            sf::Text item = text(dim.left+dim.width/2.0f, dim.top+dim.height/2.0f+dim.height + i * dim.height, 12, options[i], font);
             dropdownItems.push_back(item);
         }
         return dropdownItems;
@@ -35,6 +42,7 @@ public:
     sf::RectangleShape Rect(float x, float y, float height, float width){
         sf::RectangleShape Rect(sf::Vector2f(width, height));
         Rect.setFillColor(sf::Color{ 55, 55, 55, 255 });
+        //Rect.setOutlineColor(sf::Color::Black);
         Rect.setPosition(x, y);
         return Rect;
     }
