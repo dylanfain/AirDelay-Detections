@@ -191,6 +191,9 @@ int main() {
     // the results vector should be done after filters and sorts take place
     sf::RectangleShape MainResults = test.Rect(100, 200, 300, 600);
     std::vector<sf::Text> Results = test.displayResults(flightData, font);
+    sf::Text ResultTitle = test.text(400, 220, 20, "Results", font);
+    ResultTitle.setFillColor(sf::Color::White);
+
     
     while (window.isOpen()) {
         sf::Event event;
@@ -270,6 +273,7 @@ int main() {
 
         //Result Window
         window.draw(MainResults);
+        window.draw(ResultTitle);
         //will need an if statement to make sure that this only runs after apply filter is clicked
         for (const auto& item : Results) {
             window.draw(item);
