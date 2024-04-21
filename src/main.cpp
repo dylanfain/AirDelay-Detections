@@ -197,6 +197,11 @@ int main() {
     sf::Text ResultTitle = test.text(400, 220, 20, "Results", font);
     ResultTitle.setFillColor(sf::Color::White);
 
+    //dropdown backgrounds
+    std::vector<sf::RectangleShape> weatherDropdownBackground = test.DropdownBackground(weatherOptions, weatherRect);
+    std::vector<sf::RectangleShape> monthDropdownBackground = test.DropdownBackground(monthOptions, monthRect);
+    std::vector<sf::RectangleShape> airlineDropdownBackground = test.DropdownBackground(airlineOptions, airlineRect);
+    std::vector<sf::RectangleShape> sortDropdownBackground = test.DropdownBackground(sortOptions, sortRect);
     
     while (window.isOpen()) {
         sf::Event event;
@@ -351,21 +356,33 @@ int main() {
         } 
         
         if (weatherDropdownOpen) {
+            for (const auto& item : weatherDropdownBackground) {
+                window.draw(item);
+            }
             for (const auto& item : weatherDropdownItems) {
                 window.draw(item);
             }
         }
         if (monthDropdownOpen) {
+            for (const auto& item : monthDropdownBackground) {
+                window.draw(item);
+            }
             for (const auto& item : monthDropdownItems) {
                 window.draw(item);
             }
         }
         if (airlineDropdownOpen) {
+            for (const auto& item : airlineDropdownBackground) {
+                window.draw(item);
+            }
             for (const auto& item : airlineDropdownItems) {
                 window.draw(item);
             }
         }
         if (sortDropdownOpen) {
+            for (const auto& item : sortDropdownBackground) {
+                window.draw(item);
+            }
             for (const auto& item : sortDropdownItems) {
                 window.draw(item);
             }
