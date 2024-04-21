@@ -248,6 +248,7 @@ int main() {
                     std::cout << "Selected Month: " << monthDropdownText.getString().toAnsiString() << std::endl;
                     std::cout << "Selected Airline: " << airlineDropdownText.getString().toAnsiString() << std::endl;
                     std::cout << "Selected Sort: " << sortDropdownText.getString().toAnsiString() << std::endl;
+
                 }
 
                 // Filter button click action
@@ -297,7 +298,7 @@ int main() {
                     if(airlineDropdownText.getString().toAnsiString() != "None"){
                         flightData = filterByAirline(flightData, airlineDropdownText.getString().toAnsiString());
                     }
-
+                    cout << "Flight Data size: " << flightData.size() << endl;
                     //Determine sort method
                     string timeDisp;
                     if(sortDropdownText.getString().toAnsiString() == "Heap"){

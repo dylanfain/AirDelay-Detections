@@ -8,17 +8,39 @@ public:
     std::vector<sf::Text> displayResults(std::vector<FlightData>& flightData, sf::Font &font){
         std::vector<sf::Text> Results;
         int index = 1;
-        for (int i = flightData.size()-1; i > flightData.size()-11; i--) {
-            string weatherval = "False";
-            if(to_string(flightData[i].weatherDelay) == "1")
-                weatherval = "True";
-            std::string current = to_string(index)+".  Delay: "+to_string(flightData[i].arrivalDelay)+" mins, "+flightData[i].airline+" " +flightData[i].date + ", Weather Delay: " +
-                    weatherval;
-            sf::Text item = text(400,  225 + index *25, 12,current, font);
+        if(flightData.size() == 0){
+            string value = "There is no data for these filters";
+            sf::Text item = text(400,  225 + index *25, 12,value, font);
             item.setFillColor(sf::Color::White);
             Results.push_back(item);
-            index++;
         }
+        else if(flightData.size() < 10){
+            for (int i = flightData.size()-1; i > 0; i--) {
+                string weatherval = "False";
+                if(to_string(flightData[i].weatherDelay) == "1")
+                    weatherval = "True";
+                std::string current = to_string(index)+".  Delay: "+to_string(flightData[i].arrivalDelay)+" mins, "+flightData[i].airline+" " +flightData[i].date + ", Weather Delay: " +
+                                      weatherval;
+                sf::Text item = text(400,  225 + index *25, 12,current, font);
+                item.setFillColor(sf::Color::White);
+                Results.push_back(item);
+                index++;
+            }
+        }
+        else{
+            for (int i = flightData.size()-1; i > flightData.size()-11; i--) {
+                string weatherval = "False";
+                if(to_string(flightData[i].weatherDelay) == "1")
+                    weatherval = "True";
+                std::string current = to_string(index)+".  Delay: "+to_string(flightData[i].arrivalDelay)+" mins, "+flightData[i].airline+" " +flightData[i].date + ", Weather Delay: " +
+                                      weatherval;
+                sf::Text item = text(400,  225 + index *25, 12,current, font);
+                item.setFillColor(sf::Color::White);
+                Results.push_back(item);
+                index++;
+            }
+        }
+
         return Results;
     }
 
