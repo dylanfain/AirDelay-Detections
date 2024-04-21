@@ -57,5 +57,19 @@ public:
         setText(Text, x, y);
         return Text;
     }
+    std::vector<sf::RectangleShape> DropdownBackground(std::vector<std::string> options, sf::RectangleShape& Rect){
+        std::vector<sf::RectangleShape> stuff;
+        for (int i = 0; i < options.size(); ++i) {
+            auto dim = Rect.getGlobalBounds();
+            sf::RectangleShape current(sf::Vector2f(dim.width-2, dim.height-2));
+            //color for boxes
+            current.setFillColor(sf::Color{ 110, 110, 110, 255 });
+            current.setPosition(dim.left+1, dim.top + i*dim.height+ dim.height+1);
+            current.setOutlineColor(sf::Color::Black);
+            current.setOutlineThickness(1);
+            stuff.push_back(current);
+        }
+        return stuff;
+    }
 
 };
