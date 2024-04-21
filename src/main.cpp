@@ -125,21 +125,11 @@ int main() {
     float dropdownY = 105;
 
     // Labels for dropdowns
-    sf::Text weatherLabel("Weather Delay", font, 10);
-    weatherLabel.setFillColor(sf::Color::Black);
-    weatherLabel.setPosition(centerX - 275 - weatherLabel.getLocalBounds().width, labelY);
-
-    sf::Text monthLabel("Month", font, 10);
-    monthLabel.setFillColor(sf::Color::Black);
-    monthLabel.setPosition(centerX - monthLabel.getLocalBounds().width / 2 - 140, labelY);
-
-    sf::Text airlineLabel("Airline", font, 10);
-    airlineLabel.setFillColor(sf::Color::Black);
-    airlineLabel.setPosition(centerX + 90 - airlineLabel.getLocalBounds().width, labelY);
-
-    sf::Text sortLabel("Sort By", font, 10);
-    sortLabel.setFillColor(sf::Color::Black);
-    sortLabel.setPosition(centerX + 290 - sortLabel.getLocalBounds().width, labelY);
+    
+    sf::Text weatherLabel = test.text(48+60, labelY+5, 10, "Weather Delay", font);
+    sf::Text monthLabel = test.text(48+120+48+60, labelY+5, 10, "Month", font);
+    sf::Text airlineLabel = test.text(48+120+48+120+48+100, labelY+5, 10, "Airline", font);
+    sf::Text sortLabel = test.text(48+120+48+120+48+200+48+60, labelY+5, 10, "Sort By", font);
 
     // Dropdown options
     std::vector<std::string> weatherOptions = {"None","True", "False"};
@@ -152,20 +142,22 @@ int main() {
     float dropdownWidth = 120;
 
     // Rectangles for dropdowns
-    sf::RectangleShape weatherRect = test.Rect(centerX - 300 - dropdownWidth / 2, dropdownY, 30, 120);
-    sf::RectangleShape monthRect = test.Rect(centerX - dropdownWidth / 2 - 100, dropdownY, 30, 120);
-    sf::RectangleShape airlineRect = test.Rect(centerX + 100 - dropdownWidth / 2, dropdownY, 30, 120);
-    sf::RectangleShape sortRect = test.Rect(centerX + 300 - dropdownWidth / 2, dropdownY, 30, 120);
+    sf::RectangleShape weatherRect = test.Rect(48, dropdownY, 30, 120);
+    sf::RectangleShape monthRect = test.Rect(48+120+48, dropdownY, 30, 120);
+    sf::RectangleShape airlineRect = test.Rect(48+120+48+120+48, dropdownY, 30, 200);
+    sf::RectangleShape sortRect = test.Rect(48+120+48+120+48+200+48, dropdownY, 30, 120);
+
 
     // Text for dropdown selections
-    sf::Text weatherDropdownText = test.text(centerX - 200 - dropdownWidth / 2 - 75, dropdownY + 15, 10, "None", font);
+    sf::Text weatherDropdownText = test.text(48+60, dropdownY + 15, 10, "None", font);
     weatherDropdownText.setFillColor(sf::Color::White);
-    sf::Text monthDropdownText = test.text(centerX - dropdownWidth / 2 - 75, dropdownY + 15, 10, "None", font);
+    sf::Text monthDropdownText = test.text(48+120+48+60, dropdownY + 15, 10, "None", font);
     monthDropdownText.setFillColor(sf::Color::White);
-    sf::Text airlineDropdownText = test.text(centerX + 90 - dropdownWidth / 2 + 30, dropdownY + 15, 10, "None", font);
+    sf::Text airlineDropdownText = test.text(48+120+48+120+48+100, dropdownY + 15, 10, "None", font);
     airlineDropdownText.setFillColor(sf::Color::White);
-    sf::Text sortDropdownText = test.text(centerX + 250 - dropdownWidth / 2 + 75, dropdownY + 15, 10, "Heap", font);
+    sf::Text sortDropdownText = test.text(48+120+48+120+48+200+48+60, dropdownY + 15, 10, "Heap", font);
     sortDropdownText.setFillColor(sf::Color::White);
+
 
     // Create dropdown items
     std::vector<sf::Text> weatherDropdownItems = test.dropdown(weatherOptions, weatherRect, font);
