@@ -399,7 +399,11 @@ void handleDropdownSelection(bool& dropdownOpen, const std::vector<sf::Text>& dr
 
     for (size_t i = 0; i < dropdownItems.size(); i++) {
         if (dropdownItems[i].getGlobalBounds().contains(mousePosition)) {
-            dropdownText.setString(options[i]);
+            //dropdownText.setString(options[i]);
+            auto dim = dropdownText.getGlobalBounds();
+            dropdownText = dropdownItems[i];
+            dropdownText.setPosition(dim.left +dim.width/2.0f, dim.top+dim.height/2.0f);
+            dropdownText.setFillColor(sf::Color::White);
             dropdownOpen = false;
             break;
         }
