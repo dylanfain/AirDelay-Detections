@@ -137,7 +137,7 @@ int main() {
                                             ,"August","September","October","November","December"};
     std::vector<std::string> airlineOptions = {"None","Southwest Airlines Co.", "American Airlines Inc.",
                                                "American Eagle Airlines Inc.","United Air Lines Inc.","Skywest Airlines Inc."};
-    std::vector<std::string> sortOptions = {"Heap", "Merge"};
+    std::vector<std::string> sortOptions = {"Heap", "Merge", "Quick"};
 
     float dropdownWidth = 120;
 
@@ -315,6 +315,18 @@ int main() {
                         auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
                         timeDisp = "Merge sort execution time: " + to_string(duration.count()) + " milliseconds";
                         std::cout << "Merge sort execution time: " << duration.count() << " milliseconds" << std::endl;
+                    }
+                    else if(sortDropdownText.getString().toAnsiString() == "Quick"){
+                        // Start timing
+                        auto start = std::chrono::high_resolution_clock::now();
+                        // Sort flight data by flight delay using merge sort
+                        quickSort(flightData, 0, flightData.size() - 1);
+                        // End timing
+                        auto end = std::chrono::high_resolution_clock::now();
+                        // Calculate duration
+                        auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
+                        timeDisp = "Quick sort execution time: " + to_string(duration.count()) + " milliseconds";
+                        std::cout << "Quick sort execution time: " << duration.count() << " milliseconds" << std::endl;
                     }
                     Results = test.displayResults(flightData, font);
                     sf::Text item = test.text(400,  500, 12,timeDisp, font);
