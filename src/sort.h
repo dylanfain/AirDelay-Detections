@@ -85,3 +85,48 @@ void mergeSort(std::vector<FlightData>& flightData, int left, int right) {
         merge(flightData, left, middle, right);
     }
 }
+//helper function for quickSort
+int partition(std::vector<FlightData>& flightData, int start, int end) {
+   FlightData pivot = flightData[start];
+   int n = 0;
+   for(int i = start + 1; i <= end; i++){
+       if(flightData[i].arrivalDelay <= pivot.arrivalDelay){
+           n++;
+       }
+   }
+   //make sure pivot will index correctly
+   int pivotIndex = start + n;
+   std::swap(flightData[pivotIndex], flightData[start]);
+
+
+   int i = start;
+   int j = end;
+   // sort elements that are before and after pivot
+   while(i < pivotIndex && j > pivotIndex){
+       while(i < pivotIndex && flightData[i].arrivalDelay <= pivot.arrivalDelay){
+           i++;
+       }
+       while(j > pivotIndex && flightData[j].arrivalDelay > pivot.arrivalDelay){
+           j--;
+       }
+       if(i < pivotIndex && j > pivotIndex){
+           std::swap(flightData[i++], flightData[j--]);
+
+
+       }
+   }
+   return pivotIndex;
+}
+//quick sort function
+void quickSort(std::vector<FlightData>& flightData, int start, int end){
+   if(start >= end){
+       return;
+   }
+   //partition the flight data
+   int part = partition(flightData, start, end);
+   //sort the left part of flight data
+   quickSort(flightData, start, part - 1);
+   //sort the right part of flight data
+   quickSort(flightData, part + 1, end);
+}
+
