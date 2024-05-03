@@ -9,3 +9,5 @@ and the SFML Window should pop up. To use our program, select the appropraite fi
 the dropdown menu, choose the sort you would like to run, and press "Apply Filter".
 Now, you should see the top 10 results in the results section. Continue to modify your filter 
 requests as many times as you like and examine the results.
+##Video Tutorial
+https://youtu.be/Armq_MYq6is
