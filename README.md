@@ -10,4 +10,4 @@ the dropdown menu, choose the sort you would like to run, and press "Apply Filte
 Now, you should see the top 10 results in the results section. Continue to modify your filter 
 requests as many times as you like and examine the results.
 ## Video Tutorial
-https://youtu.be/Armq_MYq6is
+[![Video Tutorial](https://img.youtube.com/vi/Armq_MYq6is/0.jpg)](https://www.youtube.com/watch?v=Armq_MYq6is)
